@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1756854538255,
+      "tag": "0000_mysterious_the_professor",
+      "breakpoints": true
+    }
+  ]
+}
