@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia'
 
 import { createInsertSchema } from 'drizzle-typebox'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 import { db } from '../libs/db'
 import { schema } from '../libs/schema'
@@ -10,7 +10,12 @@ const createUser = createInsertSchema(schema.users)
 const createPost = createInsertSchema(schema.posts)
 
 const mutateUser = t.Omit(createUser, ['id', 'createdAt'])
-const mutatePost = t.Omit(createPost, ['id', 'userId', 'createdAt'])
+const mutatePost = t.Omit(createPost, [
+	'id',
+	'userId',
+	'createdAt',
+	'updatedAt'
+])
 
 const user = new Elysia({
 	prefix: '/user'
@@ -32,11 +37,18 @@ const userId = new Elysia({ prefix: '/user/:userId' })
 			userId: t.Number()
 		})
 	})
-	.get('', ({ params: { userId } }) =>
-		db.query.users.findFirst({
-			where: eq(schema.users.id, userId)
+	.get('', async ({ params: { userId }, status }) => {
+		const user = await db.query.users.findFirst({
+			where: eq(schema.users.id, userId),
+			with: {
+				posts: true
+			}
 		})
-	)
+
+		if (user) return user
+
+		return status(404)
+	})
 	.patch(
 		'',
 		({ body, params: { userId } }) =>
@@ -87,11 +99,15 @@ const userIdNoteId = new Elysia({
 			noteId: t.Number()
 		})
 	})
-	.get('', ({ params: { userId } }) =>
-		db.query.posts.findFirst({
+	.get('', async ({ params: { userId }, status }) => {
+		const post = await db.query.posts.findFirst({
 			where: eq(schema.posts.userId, userId)
 		})
-	)
+
+		if (post) return post
+
+		return status(404)
+	})
 	.patch(
 		'',
 		({ body, params: { userId } }) =>
@@ -101,15 +117,21 @@ const userIdNoteId = new Elysia({
 					...body,
 					updatedAt: Date.now()
 				})
-				.where(eq(schema.posts.userId, userId)),
+				.where(eq(schema.posts.userId, userId))
+				.returning(),
 		{
-			body: t.Partial(mutateUser)
+			body: t.Partial(mutatePost)
 		}
 	)
 	.delete('', ({ params: { userId } }) =>
 		db
 			.delete(schema.posts)
-			.where(eq(schema.posts.userId, userId))
+			.where(
+				and(
+					eq(schema.posts.userId, userId),
+					eq(schema.posts.id, userId)
+				)
+			)
 			.returning()
 	)
 
