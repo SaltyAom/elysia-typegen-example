@@ -4,7 +4,7 @@ import { fromTypes } from '@elysiajs/openapi/gen'
 
 import { User } from './modules/user'
 
-export const app = new Elysia()
+export default new Elysia()
 	.get('/', redirect('/openapi'), {
 		detail: {
 			hide: true
@@ -17,4 +17,3 @@ export const app = new Elysia()
 	)
 	.use(User)
 
-app.listen(3000)
