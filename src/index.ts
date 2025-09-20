@@ -3,6 +3,8 @@ import { openapi } from '@elysiajs/openapi'
 import { fromTypes } from '@elysiajs/openapi/gen'
 
 import { User } from './modules/user'
+import { complex } from './modules/complex'
+import { zod } from './modules/zod'
 
 export const app = new Elysia()
 	.get('/', redirect('/openapi'), {
@@ -12,9 +14,18 @@ export const app = new Elysia()
 	})
 	.use(
 		openapi({
-			references: fromTypes('src/index.ts')
+			references: fromTypes('src/index.ts'),
+			documentation: {
+				info: {
+					title: 'Elysia TypeGen Example',
+					version: '1.0.0',
+					description: 'All response here generated from types'
+				}
+			}
 		})
 	)
+	.use(complex)
+	.use(zod)
 	.use(User)
 	.listen(3000)
 

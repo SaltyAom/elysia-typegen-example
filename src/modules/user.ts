@@ -135,4 +135,11 @@ const userIdNoteId = new Elysia({
 			.returning()
 	)
 
-export const User = new Elysia().use([user, userId, userIdNote, userIdNoteId])
+export const User = new Elysia({ tags: ['drizzle'] })
+	.guard({
+		detail: {
+			description:
+				'Response here is generated directly from Drizzle query'
+		}
+	})
+	.use([user, userId, userIdNote, userIdNoteId])
