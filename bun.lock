@@ -4,7 +4,7 @@
     "": {
       "name": "typemap",
       "dependencies": {
-        "@elysiajs/openapi": "1.4.6",
+        "@elysiajs/openapi": "1.4.8",
         "drizzle-orm": "^0.44.5",
         "drizzle-typebox": "^0.3.3",
         "elysia": "^1.4.6",
@@ -21,7 +21,7 @@
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.10.2", "", {}, "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="],
 
-    "@elysiajs/openapi": ["@elysiajs/openapi@1.4.6", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-/qprMZ4Zkdi09ZU4tRAdhxSnraY82tBt5L89guqYWMdRyh3fExu1QAU5kdX3wtB4otSqjxuXgW72/Vuu6FhBIw=="],
+    "@elysiajs/openapi": ["@elysiajs/openapi@1.4.8", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-z65VXNE8P8waWpNVJ+NJ9EJlblK67BHUy110YirYNm98zmz2VnOsQ68VgBsww1xXHXiLjOsm9BIWg3xjnD4Ung=="],
 
     "@esbuild-kit/core-utils": ["@esbuild-kit/core-utils@3.3.2", "", { "dependencies": { "esbuild": "~0.18.20", "source-map-support": "^0.5.21" } }, "sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ=="],
 
