@@ -24,13 +24,13 @@ export const app = new Elysia()
 				}
 			},
 			mapJsonSchema: {
-				zod: z.toJsonSchema
+				zod: z.toJSONSchema
 			}
 		})
 	)
-	.use(complex)
-	.use(zod)
 	.use(User)
+	.use(zod)
+	.use(complex)
 	.listen(3000)
 
 console.log(
