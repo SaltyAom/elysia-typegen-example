@@ -1,6 +1,7 @@
 import { Elysia, redirect } from 'elysia'
 import { openapi } from '@elysiajs/openapi'
 import { fromTypes } from '@elysiajs/openapi/gen'
+import { z } from 'zod'
 
 import { User } from './modules/user'
 import { complex } from './modules/complex'
@@ -21,6 +22,9 @@ export const app = new Elysia()
 					version: '1.0.0',
 					description: 'All response here generated from types'
 				}
+			},
+			mapJsonSchema: {
+				zod: z.toJsonSchema
 			}
 		})
 	)
